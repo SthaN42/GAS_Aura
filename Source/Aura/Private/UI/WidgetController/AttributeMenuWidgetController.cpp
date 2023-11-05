@@ -18,7 +18,17 @@ void UAttributeMenuWidgetController::BroadcastInitialValues()
 
 	check(AttributeInfo);
 
-	FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(FAuraGameplayTags::Get().Attributes_Primary_Strength);
-	Info.AttributeValue = AS->GetStrength();
+	for (FAuraAttributeInfo& Info : AttributeInfo.Get()->AttributeInformation)
+	{
+		BroadcastAttributeInfo(Info.AttributeTag);
+	}
+}
+
+void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& Tag) const
+{
+	FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(Tag);
+
+	Info.AttributeValue = Info.AttributeGetter.GetNumericValue(AttributeSet);
+
 	AttributeInfoDelegate.Broadcast(Info);
 }
