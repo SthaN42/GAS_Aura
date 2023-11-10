@@ -27,6 +27,10 @@ public:
 
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 
+	// Begin CombatInterface
+	virtual void Die() override;
+	// End CombatInterface
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -39,6 +43,9 @@ protected:
 	// Begin CombatInterface
 	virtual FVector GetCombatSocketLocation() override;
 	// End CombatInterface
+
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandleDeath();
 
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;

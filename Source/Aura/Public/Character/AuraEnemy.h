@@ -29,6 +29,7 @@ public:
 
 	// Begin Combat Interface
 	virtual int32 GetPlayerLevel() override;
+	virtual void Die() override;
 	// End Combat Interface
 
 	UPROPERTY(BlueprintAssignable)
@@ -44,6 +45,10 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Combat")
 	float BaseWalkSpeed = 250.f;
+
+	/* The amount of time before the rag-dolled enemy will disappear. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	float DeathLifeSpan = 5.f;
 	
 protected:
 	virtual void BeginPlay() override;
