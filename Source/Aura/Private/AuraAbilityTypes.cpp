@@ -48,7 +48,7 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 
 	if (RepBits & (1 << 0))
 	{
-		Ar << bReplicateInstigator;
+		Ar << Instigator;
 	}
 	if (RepBits & (1 << 1))
 	{
