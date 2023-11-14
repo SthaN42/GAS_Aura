@@ -33,7 +33,7 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 
 void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit)
 {
-	if (IsValid(TargetCharacter) && DamageTextWidgetComponentClass)
+	if (IsValid(TargetCharacter) && DamageTextWidgetComponentClass && IsLocalController())
 	{
 		UDamageTextWidgetComponent* DamageText = NewObject<UDamageTextWidgetComponent>(TargetCharacter, DamageTextWidgetComponentClass);
 		DamageText->RegisterComponent();
