@@ -41,7 +41,7 @@ protected:
 	FName WeaponTipSocketName;
 
 	// Begin CombatInterface
-	virtual FVector GetCombatSocketLocation() override;
+	virtual FVector GetCombatSocketLocation_Implementation() override;
 	// End CombatInterface
 
 	UFUNCTION(NetMulticast, Reliable)
