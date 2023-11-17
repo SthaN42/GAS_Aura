@@ -7,6 +7,7 @@
 #include "Data/CharacterClassInfo.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
+struct FTaggedMontage;
 class UAbilitySystemComponent;
 class UAttributeMenuWidgetController;
 class UOverlayWidgetController;
@@ -48,4 +49,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Mechanics", meta = (WorldContext = "WorldContextObject"))
 	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, float Radius, const FVector& SphereOrigin, bool bDrawDebugSphere);
+
+	//todo: move this function to a more adequate location
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Montages")
+	static FTaggedMontage FindTaggedMontageForTag(TArray<FTaggedMontage> TaggedMontages, const FGameplayTag& MontageTag, bool bLogNotFound = false); 
 };

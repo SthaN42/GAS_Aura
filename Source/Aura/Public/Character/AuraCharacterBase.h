@@ -27,7 +27,7 @@ public:
 
 	// Begin CombatInterface
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
-	virtual FVector GetCombatSocketLocation_Implementation() override;
+	virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
 	virtual void Die() override;
 	virtual bool IsDead_Implementation() const override;
 	virtual AActor* GetAvatar_Implementation() override;
@@ -42,9 +42,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
-	
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	FName WeaponTipSocketName;
 
 	bool bIsDead = false;
 
