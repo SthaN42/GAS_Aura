@@ -52,5 +52,8 @@ public:
 
 	//todo: move this function to a more adequate location
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Montages")
-	static FTaggedMontage FindTaggedMontageForTag(TArray<FTaggedMontage> TaggedMontages, const FGameplayTag& MontageTag, bool bLogNotFound = false); 
+	static FTaggedMontage FindTaggedMontageForTag(TArray<FTaggedMontage> TaggedMontages, const FGameplayTag& MontageTag, bool bLogNotFound = false);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Mechanics")
+	static bool IsNotFriend(AActor* FirstActor, AActor* SecondActor);
 };
