@@ -71,6 +71,7 @@ int32 AAuraEnemy::GetPlayerLevel()
 void AAuraEnemy::Die()
 {
 	SetLifeSpan(DeathLifeSpan);
+	if (AuraAIController) AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), true);
 	Super::Die();
 }
 
@@ -124,7 +125,7 @@ void AAuraEnemy::BeginPlay()
 
 void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
 {
-		//todo: sometimes bHitReacting is never resets to false, maybe when getting hit by multiple source at the same time?
+	//todo: sometimes bHitReacting is never resets to false, maybe when getting hit by multiple source at the same time?
 	bHitReacting = NewCount > 0;
 	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f : BaseWalkSpeed;
 	if (AuraAIController && AuraAIController->GetBlackboardComponent())
