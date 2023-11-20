@@ -147,7 +147,7 @@ void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldC
 		
 		if (bDrawDebugSphere)
 		{
-			DrawDebugSphere(World, SphereOrigin, Radius, 12, FColor::Orange, false, 1.f);
+			DrawDebugSphere(World, SphereOrigin, Radius, 12, FColor::Cyan, false, 1.f);
 		}
 	}
 }
