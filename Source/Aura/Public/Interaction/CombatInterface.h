@@ -15,6 +15,7 @@ struct FTaggedMontage
 {
 	GENERATED_BODY()
 
+	/* The Montage to tag. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UAnimMontage* Montage = nullptr;
 
