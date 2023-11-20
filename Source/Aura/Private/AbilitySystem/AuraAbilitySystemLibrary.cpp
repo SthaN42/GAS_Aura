@@ -129,7 +129,7 @@ void UAuraAbilitySystemLibrary::SetIsCriticalHit(FGameplayEffectContextHandle& E
 }
 
 void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldContextObject,
-	TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, float Radius,	const FVector& SphereOrigin, bool bDrawDebugSphere)
+	TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, const float Radius,	const FVector& SphereOrigin, const bool bDrawDebugSphere, const FLinearColor DebugSphereColor, const float DrawTime)
 {
 	FCollisionQueryParams SphereParams;
 	SphereParams.AddIgnoredActors(ActorsToIgnore);
@@ -147,7 +147,7 @@ void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldC
 		
 		if (bDrawDebugSphere)
 		{
-			DrawDebugSphere(World, SphereOrigin, Radius, 12, FColor::Cyan, false, 1.f);
+			DrawDebugSphere(World, SphereOrigin, Radius, 12, DebugSphereColor.ToFColor(true), false, DrawTime);
 		}
 	}
 }
