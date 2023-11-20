@@ -160,6 +160,10 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Montage.Attack.RightHand"),
 		FString("Right Hand"));
 
+	GameplayTags.Montage_Attack_Tail = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Attack.Tail"),
+		FString("Tail"));
+
 	// Effects Tags
 
 	GameplayTags.Effects_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(
