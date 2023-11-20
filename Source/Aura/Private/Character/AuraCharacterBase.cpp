@@ -37,11 +37,11 @@ UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation()
 
 FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag)
 {
-	if (MontageTag.MatchesTagExact(FAuraGameplayTags::Get().Montage_Attack_Weapon) && IsValid(Weapon))
+	if (MontageTag.MatchesTagExact(FAuraGameplayTags::Get().CombatSocket_Weapon) && IsValid(Weapon))
 	{
-		return Weapon->GetSocketLocation(UAuraAbilitySystemLibrary::FindTaggedMontageForTag(AttackMontages, MontageTag).SocketName);
+		return Weapon->GetSocketLocation(UAuraAbilitySystemLibrary::FindTaggedMontageBySocketTag(AttackMontages, MontageTag).SocketName);
 	}
-	return GetMesh()->GetSocketLocation(UAuraAbilitySystemLibrary::FindTaggedMontageForTag(AttackMontages, MontageTag).SocketName);
+	return GetMesh()->GetSocketLocation(UAuraAbilitySystemLibrary::FindTaggedMontageBySocketTag(AttackMontages, MontageTag).SocketName);
 }
 
 void AAuraCharacterBase::Die()

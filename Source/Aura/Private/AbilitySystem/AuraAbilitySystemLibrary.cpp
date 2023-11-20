@@ -152,7 +152,7 @@ void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldC
 	}
 }
 
-FTaggedMontage UAuraAbilitySystemLibrary::FindTaggedMontageForTag(TArray<FTaggedMontage> TaggedMontages,
+FTaggedMontage UAuraAbilitySystemLibrary::FindTaggedMontageByMontageTag(TArray<FTaggedMontage> TaggedMontages,
 	const FGameplayTag& MontageTag, bool bLogNotFound)
 {
 	for (FTaggedMontage TaggedMontage : TaggedMontages)
@@ -166,6 +166,24 @@ FTaggedMontage UAuraAbilitySystemLibrary::FindTaggedMontageForTag(TArray<FTagged
 	if (bLogNotFound)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Can't find TaggedMontage for MontageTag [%s] on given array."), *MontageTag.ToString());
+	}
+	return FTaggedMontage();
+}
+
+FTaggedMontage UAuraAbilitySystemLibrary::FindTaggedMontageBySocketTag(TArray<FTaggedMontage> TaggedMontages,
+                                                                       const FGameplayTag& SocketTag, bool bLogNotFound)
+{
+	for (FTaggedMontage TaggedMontage : TaggedMontages)
+	{
+		if (TaggedMontage.SocketTag.MatchesTagExact(SocketTag))
+		{
+			return TaggedMontage;
+		}
+	}
+
+	if (bLogNotFound)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Can't find TaggedMontage for MontageTag [%s] on given array."), *SocketTag.ToString());
 	}
 	return FTaggedMontage();
 }

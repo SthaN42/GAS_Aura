@@ -50,9 +50,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Mechanics", meta = (WorldContext = "WorldContextObject", AdvancedDisplay = "DebugSphereColor, DrawTime"))
 	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, const float Radius, const FVector& SphereOrigin, const bool bDrawDebugSphere, const FLinearColor DebugSphereColor = FLinearColor::White, const float DrawTime = 3.f);
 
-	//todo: move this function to a more adequate location
+	//todo: move theses functions to a more adequate location
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Montages")
-	static FTaggedMontage FindTaggedMontageForTag(TArray<FTaggedMontage> TaggedMontages, const FGameplayTag& MontageTag, bool bLogNotFound = false);
+	static FTaggedMontage FindTaggedMontageByMontageTag(TArray<FTaggedMontage> TaggedMontages, const FGameplayTag& MontageTag, bool bLogNotFound = false);
+	
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Montages")
+	static FTaggedMontage FindTaggedMontageBySocketTag(TArray<FTaggedMontage> TaggedMontages, const FGameplayTag& SocketTag, bool bLogNotFound = false);
 
 	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Mechanics")
 	static bool IsNotFriend(AActor* FirstActor, AActor* SecondActor);

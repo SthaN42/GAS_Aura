@@ -18,14 +18,22 @@ struct FTaggedMontage
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UAnimMontage* Montage = nullptr;
 
+	/* Tag used to identify TaggedMontages in an array.
+	 * AnimMontages needs to send this tag to abilities using the AN_MontageEvent AnimNotify
+	 * This should be unique to each TaggedMontage in an array!
+	 */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag MontageTag;
 
-	/* todo: change this to have a UNIQUE MontageTag per TaggedMontage (in the AttackMontages array), AND another tag linking this montage to a socket. */
+	/* Tag used to identify which CombatSocket should be used in abilities, ie. the location to spawn a projectile. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FGameplayTag SocketTag;
 
+	/* The name of the socket the SocketTag refers to. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FName SocketName;
 
+	/* An optional sound that can be used in abilities with specific conditions. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	USoundBase* ImpactSound = nullptr;
 };

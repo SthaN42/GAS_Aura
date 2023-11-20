@@ -150,23 +150,49 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Abilities.Summon"),
 		FString("Summon Ability Tag"));
 
+	// CombatSocket Tags
+
+	GameplayTags.CombatSocket_Weapon = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("CombatSocket.Weapon"),
+		FString("Weapon Socket"));
+
+	GameplayTags.CombatSocket_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("CombatSocket.LeftHand"),
+		FString("Left Hand Socket"));
+
+	GameplayTags.CombatSocket_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("CombatSocket.RightHand"),
+		FString("Right Hand Socket"));
+
+	GameplayTags.CombatSocket_Tail = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("CombatSocket.Tail"),
+		FString("Tail Socket"));
+
 	// Montage Tags
 
-	GameplayTags.Montage_Attack_Weapon = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Montage.Attack.Weapon"),
-		FString("Weapon"));
+	GameplayTags.Montage_Attack_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Attack.1"),
+		FString("Attack Montage identifier 1"));
 
-	GameplayTags.Montage_Attack_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Montage.Attack.LeftHand"),
-		FString("Left Hand"));
+	GameplayTags.Montage_Attack_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Attack.2"),
+		FString("Attack Montage identifier 2"));
+	
+	GameplayTags.Montage_Attack_3 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Attack.3"),
+		FString("Attack Montage identifier 3"));
 
-	GameplayTags.Montage_Attack_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Montage.Attack.RightHand"),
-		FString("Right Hand"));
+	GameplayTags.Montage_Attack_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Attack.4"),
+		FString("Attack Montage identifier 4"));
 
-	GameplayTags.Montage_Attack_Tail = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Montage.Attack.Tail"),
-		FString("Tail"));
+	GameplayTags.Montage_Summon_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Summon.1"),
+		FString("Summon Montage identifier 1"));
+	
+	GameplayTags.Montage_Summon_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Summon.2"),
+		FString("Summon Montage identifier 2"));
 
 	// Effects Tags
 
