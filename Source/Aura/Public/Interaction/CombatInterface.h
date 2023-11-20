@@ -21,6 +21,8 @@ struct FTaggedMontage
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag MontageTag;
 
+	/* todo: change this to have a UNIQUE MontageTag per TaggedMontage (in the AttackMontages array), AND another tag linking this montage to a socket. */
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FName SocketName;
 
@@ -68,4 +70,7 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	UNiagaraSystem* GetBloodEffect();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	int32 GetMinionCount();
 };
