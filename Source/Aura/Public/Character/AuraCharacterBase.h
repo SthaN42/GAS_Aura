@@ -35,6 +35,7 @@ public:
 	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
 	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
 	virtual int32 GetMinionCount_Implementation() override;
+	virtual int32 AddToMinionCount_Implementation(const int32 Amount) override;
 	// End CombatInterface
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
