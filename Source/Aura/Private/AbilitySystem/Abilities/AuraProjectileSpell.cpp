@@ -18,7 +18,7 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 	
 }
 
-void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag)
+void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, const bool bOverridePitch, const float PitchOverride)
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
@@ -26,6 +26,10 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 		GetAvatarActorFromActorInfo(), SocketTag);
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
+	if (bOverridePitch)
+	{
+		Rotation.Pitch = PitchOverride;
+	}
 
 	FTransform SpawnTransform;
 	SpawnTransform.SetLocation(SocketLocation);
@@ -60,4 +64,15 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	Projectile->DamageEffectSpecHandle = SpecHandle;
 
 	Projectile->FinishSpawning(SpawnTransform);
+}
+
+float UAuraProjectileSpell::CalculatePitch(const float InitialProjectileSpeed, const FVector& StartLocation, const FVector& EndLocation, const float Gravity)
+{
+	const float SpeedSq = FMath::Square(InitialProjectileSpeed);
+	const float SpeedPow4 = FMath::Pow(InitialProjectileSpeed, 4);
+	const float DistanceToTarget = UE::Geometry::Distance(StartLocation, EndLocation);
+	const float YDifference = EndLocation.Z - StartLocation.Z;
+	const float DistanceSq = FMath::Square(DistanceToTarget);
+	// This does NOT take air resistance into account. 
+	return FMath::RadiansToDegrees(FMath::Atan((SpeedSq - FMath::Sqrt(SpeedPow4 - Gravity * (Gravity * DistanceSq + 2.f * YDifference * SpeedSq))) / (Gravity * DistanceToTarget)));
 }
