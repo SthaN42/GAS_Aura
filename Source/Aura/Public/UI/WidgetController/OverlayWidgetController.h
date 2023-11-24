@@ -7,6 +7,8 @@
 #include "OverlayWidgetController.generated.h"
 
 class UAbilityInfo;
+class UAuraUserWidget;
+class UAuraAbilitySystemComponent;
 
 USTRUCT(NotBlueprintType)
 struct FUIWidgetRow : public FTableRowBase
@@ -26,10 +28,7 @@ struct FUIWidgetRow : public FTableRowBase
 	UTexture2D* Image = nullptr;
 };
 
-class UAuraUserWidget;
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
 
 /**
@@ -70,6 +69,8 @@ protected:
 
 	template<typename T>
 	static T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
+
+	void OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraAbilitySystemComponent);
 };
 
 template <typename T>
