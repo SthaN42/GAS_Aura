@@ -60,5 +60,6 @@ private:
 	UFUNCTION()
 	void OnRep_Level(int32 OldLevel) const;
 
+	UFUNCTION()
 	void OnRep_XP(int32 OldXP) const;
 };
