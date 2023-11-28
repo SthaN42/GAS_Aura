@@ -15,10 +15,10 @@ struct FAuraLevelUpInfo
 	int32 LevelUpRequirement = 0;
 
 	UPROPERTY(EditDefaultsOnly)
-	int32 AttributePointReward = 1;
+	int32 AttributePointsReward = 1;
 
 	UPROPERTY(EditDefaultsOnly)
-	int32 SpellPointReward = 1;
+	int32 SpellPointsReward = 1;
 };
 
 /**
