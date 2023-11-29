@@ -69,6 +69,22 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	}
 }
 
+void UAuraAttributeSet::PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue)
+{
+	Super::PostAttributeChange(Attribute, OldValue, NewValue);
+
+	if (Attribute == GetMaxHealthAttribute() && bTopOffHealth)
+	{
+		SetHealth(GetMaxHealth());
+		bTopOffHealth = false;
+	}
+	if (Attribute == GetMaxManaAttribute() && bTopOffMana)
+	{
+		SetMana(GetMaxMana());
+		bTopOffMana = false;
+	}
+}
+
 void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
 {
 	// Source = causer of the effect, Target = target of the effect (owner of this AS)
@@ -169,8 +185,8 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 				IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, AttributePointsReward);
 				IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, SpellPointsReward);
 				
-				SetHealth(GetMaxHealth());
-				SetMana(GetMaxMana());
+				bTopOffHealth = true;
+				bTopOffMana = true;
 				
 				IPlayerInterface::Execute_LevelUp(Props.SourceCharacter);
 			}
