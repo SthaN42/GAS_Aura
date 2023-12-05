@@ -27,4 +27,9 @@ public:
 	FGameplayTag StartupInputTag;
 
 protected:
+	UFUNCTION(BlueprintPure)
+	float GetManaCost(float InLevel = 1.f) const;
+	
+	UFUNCTION(BlueprintPure)
+	float GetCooldown(float InLevel = 1.f) const;
 };
