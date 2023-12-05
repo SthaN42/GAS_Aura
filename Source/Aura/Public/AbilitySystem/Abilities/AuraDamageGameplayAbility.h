@@ -19,9 +19,12 @@ public:
 	void CauseDamage(AActor* TargetActor);
 
 protected:
+	UFUNCTION(BlueprintPure)
+	int32 GetDamageByTag(const FGameplayTag DamageTag, int32 Level);
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect> DamageEffectClass;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
 	TMap<FGameplayTag, FScalableFloat> DamageTypes;
 };

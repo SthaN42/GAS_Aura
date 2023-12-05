@@ -9,23 +9,21 @@
 #include "Interaction/CombatInterface.h"
 #include "Aura/Public/AuraGameplayTags.h"
 
-FString UAuraProjectileSpell::GetDescription(int32 Level)
+FString UAuraProjectileSpell::GetDescription_Implementation(int32 Level)
 {
-	const int32 Damage = DamageTypes[FAuraGameplayTags::Get().Damage_Fire].GetValueAtLevel(Level);
 	if (Level == 1)
 	{
-		return FString::Printf(TEXT("<Title>FIRE BOLT</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches a bolt of fire, exploding on impact and dealing </><Damage>%d</><Default> fire damage with a chance to burn</>"), Level, Damage);
+		return FString::Printf(TEXT("<Title>PROJECTILE</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches a projectile, dealing damage on impact.</>"), Level);
 	}
 	else
 	{
-		return FString::Printf(TEXT("<Title>FIRE BOLT</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches %d bolts of fire, exploding on impact and dealing </><Damage>%d</><Default> fire damage with a chance to burn</>"), Level, FMath::Min(Level, MaxNumberOfProjectiles), Damage);
+		return FString::Printf(TEXT("<Title>PROJECTILE</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches %d projectiles, dealing damage on impact.</>"), Level, FMath::Min(Level, MaxNumberOfProjectiles));
 	}
 }
 
-FString UAuraProjectileSpell::GetNextLevelDescription(int32 Level)
+FString UAuraProjectileSpell::GetNextLevelDescription_Implementation(int32 Level)
 {
-	const int32 Damage = DamageTypes[FAuraGameplayTags::Get().Damage_Fire].GetValueAtLevel(Level);
-	return FString::Printf(TEXT("<Title>NEXT LEVEL</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches %d bolts of fire, exploding on impact and dealing </><Damage>%d</><Default> fire damage with a chance to burn</>"), Level, FMath::Min(Level, MaxNumberOfProjectiles), Damage);
+	return FString::Printf(TEXT("<Title>NEXT LEVEL</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches %d projectiles, dealing damage on impact.</>"), Level, FMath::Min(Level, MaxNumberOfProjectiles));
 }
 
 void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
