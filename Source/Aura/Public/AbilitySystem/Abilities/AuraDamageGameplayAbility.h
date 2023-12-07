@@ -19,12 +19,15 @@ public:
 	void CauseDamage(AActor* TargetActor);
 
 protected:
-	UFUNCTION(BlueprintPure, meta = ( InLevel = "1.f"))
-	float GetDamageByDamageType(float InLevel, const FGameplayTag DamageTypeTag);
+	UFUNCTION(BlueprintPure)
+	float GetDamage(float InLevel = 1.f) const;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect> DamageEffectClass;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
-	TMap<FGameplayTag, FScalableFloat> DamageTypes;
+	FGameplayTag DamageType;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
+	FScalableFloat Damage;
 };
