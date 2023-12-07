@@ -7,6 +7,7 @@
 #include "Data/CharacterClassInfo.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
+struct FDamageEffectParams;
 class UAbilityInfo;
 class AAuraHUD;
 class USpellMenuWidgetController;
@@ -72,6 +73,9 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Mechanics")
 	static bool IsNotFriend(AActor* FirstActor, AActor* SecondActor);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Damage Effect")
+	static FGameplayEffectContextHandle ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams);
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Character Class")
 	static int32 GetXPRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, int32 CharacterLevel);
