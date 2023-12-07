@@ -3,10 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Data/CharacterClassInfo.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
+struct FGameplayEffectContextHandle;
 struct FDamageEffectParams;
 class UAbilityInfo;
 class AAuraHUD;
@@ -54,6 +56,21 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
 	static bool IsCriticalHit(const FGameplayEffectContextHandle& EffectContextHandle);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static bool IsSuccessfulDebuff(const FGameplayEffectContextHandle& EffectContextHandle);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static float GetDebuffDamage(const FGameplayEffectContextHandle& EffectContextHandle);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static float GetDebuffDuration(const FGameplayEffectContextHandle& EffectContextHandle);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static float GetDebuffFrequency(const FGameplayEffectContextHandle& EffectContextHandle);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static FGameplayTag GetDamageType(const FGameplayEffectContextHandle& EffectContextHandle);
 	
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
 	static void SetIsBlockedHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bInIsBlockedHit);
@@ -64,7 +81,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Mechanics", meta = (DefaultToSelf = "WorldContextObject", AdvancedDisplay = "DebugSphereColor, DrawTime"))
 	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, const float Radius, const FVector& SphereOrigin, const bool bDrawDebugSphere, const FLinearColor DebugSphereColor = FLinearColor::White, const float DrawTime = 3.f);
 
-	//todo: move theses functions to a more adequate location
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Montages")
 	static FTaggedMontage FindTaggedMontageByMontageTag(TArray<FTaggedMontage> TaggedMontages, const FGameplayTag& MontageTag, bool bLogNotFound = false);
 	
