@@ -78,6 +78,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
 	static void SetIsCriticalHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bInIsCriticalHit);
 
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
+	static void SetIsSuccessfulDebuff(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bInIsSuccessfulDebuff);
+
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
+	static void SetDebuffDamage(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, float InDebuffDamage);
+
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
+	static void SetDebuffDuration(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, float InDebuffDuration);
+
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
+	static void SetDebuffFrequency(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, float InDebuffFrequency);
+
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
+	static void SetDamageType(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const FGameplayTag& InDamageType);
+
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Mechanics", meta = (DefaultToSelf = "WorldContextObject", AdvancedDisplay = "DebugSphereColor, DrawTime"))
 	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, const float Radius, const FVector& SphereOrigin, const bool bDrawDebugSphere, const FLinearColor DebugSphereColor = FLinearColor::White, const float DrawTime = 3.f);
 
