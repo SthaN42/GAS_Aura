@@ -191,9 +191,13 @@ void UAuraAttributeSet::HandleDebuff(const FEffectProperties& Props)
 		FGameplayEffectContextHandle EffectContext = Props.SourceASC->MakeEffectContext();
 		EffectContext.AddSourceObject(Props.SourceAvatarActor);
 
-		const FGameplayEffectSpecHandle EffectSpec = Props.SourceASC->MakeOutgoingSpec(Ability->GetDebuffEffectClass(), 1.f, EffectContext);
+		//todo: maybe go back to a dynamic gameplay effect. Use Spec->DynamicGrantedTags to add the debuff tag. This is discussed in Section 310 
+		if (const TSubclassOf<UGameplayEffect> DebuffEffectClass = Ability->GetDebuffEffectClass())
+		{
+			const FGameplayEffectSpecHandle EffectSpec = Props.SourceASC->MakeOutgoingSpec(DebuffEffectClass, 1.f, EffectContext);
 
-		Props.TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpec.Data);
+			Props.TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpec.Data);
+		}
 	}
 }
 
