@@ -19,8 +19,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void CauseDamage(AActor* TargetActor);
 
-	TSubclassOf<UGameplayEffect> GetDebuffEffectClass() const { return DebuffEffectClass; }
-
 	UFUNCTION(BlueprintPure)
 	FDamageEffectParams MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor = nullptr) const;
 
@@ -38,8 +36,14 @@ protected:
 	FScalableFloat Damage;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Damage|Debuff")
-	float DebuffChance = 20.f;
+	float DebuffChance = 0.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage|Debuff")
-	TSubclassOf<UGameplayEffect> DebuffEffectClass;
+	UPROPERTY(EditDefaultsOnly, Category = "Damage|Debuff")
+	float DebuffDamage = 5.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Damage|Debuff")
+	float DebuffFrequency = 1.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Damage|Debuff")
+	float DebuffDuration = 5.f;
 };

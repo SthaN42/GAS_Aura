@@ -186,18 +186,42 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 
 void UAuraAttributeSet::HandleDebuff(const FEffectProperties& Props)
 {
-	if (const UAuraDamageGameplayAbility* Ability = Cast<UAuraDamageGameplayAbility>(Props.EffectContextHandle.GetAbility()))
+	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+	
+	FGameplayEffectContextHandle EffectContext = Props.SourceASC->MakeEffectContext();
+	EffectContext.AddSourceObject(Props.SourceAvatarActor);
+
+	const FGameplayTag DamageType = UAuraAbilitySystemLibrary::GetDamageType(Props.EffectContextHandle);
+	const float DebuffDamage = UAuraAbilitySystemLibrary::GetDebuffDamage(Props.EffectContextHandle);
+	const float DebuffDuration = UAuraAbilitySystemLibrary::GetDebuffDuration(Props.EffectContextHandle);
+	const float DebuffFrequency = UAuraAbilitySystemLibrary::GetDebuffFrequency(Props.EffectContextHandle);
+
+	const FString DebuffName = FString::Printf(TEXT("DynamicDebuff_%s"), *DamageType.ToString());
+	UGameplayEffect* Effect = NewObject<UGameplayEffect>(GetTransientPackage(), FName(DebuffName));
+
+	Effect->DurationPolicy = EGameplayEffectDurationType::HasDuration;
+	Effect->Period = DebuffFrequency;
+	Effect->DurationMagnitude = FScalableFloat(DebuffDuration);
+	Effect->StackingType = EGameplayEffectStackingType::AggregateBySource;
+	Effect->StackLimitCount = 1;
+
+	FGameplayModifierInfo ModifierInfo;
+
+	ModifierInfo.ModifierMagnitude = FScalableFloat(DebuffDamage);
+	ModifierInfo.ModifierOp = EGameplayModOp::Additive;
+	ModifierInfo.Attribute = GetIncomingDamageAttribute();
+
+	Effect->Modifiers.Add(ModifierInfo);
+
+	if (FGameplayEffectSpec* MutableSpec = new FGameplayEffectSpec(Effect, EffectContext, 1.f))
 	{
-		FGameplayEffectContextHandle EffectContext = Props.SourceASC->MakeEffectContext();
-		EffectContext.AddSourceObject(Props.SourceAvatarActor);
+		FAuraGameplayEffectContext* AuraContext = static_cast<FAuraGameplayEffectContext*>(MutableSpec->GetContext().Get());
+		const TSharedPtr<FGameplayTag> DebuffDamageType = MakeShareable(new FGameplayTag(DamageType));
+		AuraContext->SetDamageType(DebuffDamageType);
 
-		//todo: maybe go back to a dynamic gameplay effect. Use Spec->DynamicGrantedTags to add the debuff tag. This is discussed in Section 310 
-		if (const TSubclassOf<UGameplayEffect> DebuffEffectClass = Ability->GetDebuffEffectClass())
-		{
-			const FGameplayEffectSpecHandle EffectSpec = Props.SourceASC->MakeOutgoingSpec(DebuffEffectClass, 1.f, EffectContext);
+		MutableSpec->DynamicGrantedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
 
-			Props.TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpec.Data);
-		}
+		Props.TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
 	}
 }
 
