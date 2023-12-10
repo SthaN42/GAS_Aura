@@ -25,10 +25,8 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 	Params.BaseDamage = GetDamage(GetAbilityLevel());
 	Params.AbilityLevel = GetAbilityLevel();
 	Params.DamageType = DamageType;
+	Params.Ability = this;
 	Params.DebuffChance = DebuffChance;
-	Params.DebuffDamage = DebuffDamage;
-	Params.DebuffDuration = DebuffDuration;
-	Params.DebuffFrequency = DebuffFrequency;
 
 	return Params;
 }

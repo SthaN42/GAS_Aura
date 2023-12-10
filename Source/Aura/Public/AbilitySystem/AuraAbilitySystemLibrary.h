@@ -61,15 +61,6 @@ public:
 	static bool IsSuccessfulDebuff(const FGameplayEffectContextHandle& EffectContextHandle);
 
 	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
-	static float GetDebuffDamage(const FGameplayEffectContextHandle& EffectContextHandle);
-
-	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
-	static float GetDebuffDuration(const FGameplayEffectContextHandle& EffectContextHandle);
-
-	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
-	static float GetDebuffFrequency(const FGameplayEffectContextHandle& EffectContextHandle);
-
-	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
 	static FGameplayTag GetDamageType(const FGameplayEffectContextHandle& EffectContextHandle);
 	
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
@@ -80,15 +71,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
 	static void SetIsSuccessfulDebuff(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bInIsSuccessfulDebuff);
-
-	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
-	static void SetDebuffDamage(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, float InDebuffDamage);
-
-	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
-	static void SetDebuffDuration(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, float InDebuffDuration);
-
-	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
-	static void SetDebuffFrequency(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, float InDebuffFrequency);
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
 	static void SetDamageType(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const FGameplayTag& InDamageType);

@@ -128,13 +128,10 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 			ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(TagsToCaptureDefs[ResistanceTag], EvaluationParameters, TargetDebuffResistance);
 			TargetDebuffResistance = FMath::Max<float>(TargetDebuffResistance, 0.f);
 			const float EffectiveDebuffChance = SourceDebuffChance * (100.f - TargetDebuffResistance) / 100.f;
-			const bool bDebuff = FMath::RandRange(1, 100) < EffectiveDebuffChance;
+ 			const bool bDebuff = FMath::RandRange(1, 100) < EffectiveDebuffChance;
 			if (bDebuff)
 			{
 				UAuraAbilitySystemLibrary::SetIsSuccessfulDebuff(EffectContextHandle, true);
-				UAuraAbilitySystemLibrary::SetDebuffDamage(EffectContextHandle, Spec.GetSetByCallerMagnitude(GameplayTags.Debuff_Damage, false, -1.f));
-				UAuraAbilitySystemLibrary::SetDebuffDuration(EffectContextHandle, Spec.GetSetByCallerMagnitude(GameplayTags.Debuff_Duration, false, -1.f));
-				UAuraAbilitySystemLibrary::SetDebuffFrequency(EffectContextHandle, Spec.GetSetByCallerMagnitude(GameplayTags.Debuff_Frequency, false, -1.f));
 				UAuraAbilitySystemLibrary::SetDamageType(EffectContextHandle, DamageType);
 			}
 		}

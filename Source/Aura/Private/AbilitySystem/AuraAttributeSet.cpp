@@ -4,14 +4,17 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AuraAbilityTypes.h"
 #include "AuraGameplayTags.h"
 #include "GameplayEffectExtension.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "AbilitySystem/Abilities/AuraDamageGameplayAbility.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
 #include "Interaction/PlayerInterface.h"
 #include "Net/UnrealNetwork.h"
 #include "Player/AuraPlayerController.h"
+#include "GameplayEffectComponents/TargetTagsGameplayEffectComponent.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -125,6 +128,8 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
 
+	if (Props.TargetCharacter->Implements<UCombatInterface>() && ICombatInterface::Execute_IsDead(Props.TargetCharacter)) return;
+	
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
@@ -181,7 +186,15 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 
 void UAuraAttributeSet::HandleDebuff(const FEffectProperties& Props)
 {
-	
+	if (const UAuraDamageGameplayAbility* Ability = Cast<UAuraDamageGameplayAbility>(Props.EffectContextHandle.GetAbility()))
+	{
+		FGameplayEffectContextHandle EffectContext = Props.SourceASC->MakeEffectContext();
+		EffectContext.AddSourceObject(Props.SourceAvatarActor);
+
+		const FGameplayEffectSpecHandle EffectSpec = Props.SourceASC->MakeOutgoingSpec(Ability->GetDebuffEffectClass(), 1.f, EffectContext);
+
+		Props.TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpec.Data);
+	}
 }
 
 void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
