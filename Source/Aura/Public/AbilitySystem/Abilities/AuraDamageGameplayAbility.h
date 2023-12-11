@@ -35,8 +35,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
 	FScalableFloat Damage;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	float DeathImpulseMagnitude = 60.f;
+	UPROPERTY(EditDefaultsOnly, Category = "Damage|Forces and impulses")
+	float KnockbackChance = 0.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Damage|Forces and impulses")
+	float KnockbackForceMagnitude = 500.f;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Damage|Forces and impulses")
+	float DeathImpulseMagnitude = 10000.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Damage|Debuff")
 	float DebuffChance = 0.f;
