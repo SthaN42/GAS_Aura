@@ -6,8 +6,9 @@
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Actor/AuraProjectile.h"
 #include "Interaction/CombatInterface.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
-void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, AActor* HomingTarget, const bool bOverridePitch, const float PitchOverride)
+void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, const AActor* HomingTarget, const bool bOverridePitch, const float PitchOverride)
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
@@ -37,6 +38,22 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 
 		Projectile->DamageEffectParams = MakeDamageEffectParamsFromClassDefaults();
 
+		if (bLaunchHomingProjectiles)
+		{
+			if (HomingTarget && HomingTarget->Implements<UCombatInterface>())
+			{
+				Projectile->ProjectileMovement->HomingTargetComponent = HomingTarget->GetRootComponent();
+			}
+			else
+			{
+				Projectile->HomingTargetSceneComponent = NewObject<USceneComponent>(USceneComponent::StaticClass());
+				Projectile->HomingTargetSceneComponent->SetWorldLocation(ProjectileTargetLocation);
+				Projectile->ProjectileMovement->HomingTargetComponent = Projectile->HomingTargetSceneComponent;
+			}
+			Projectile->ProjectileMovement->HomingAccelerationMagnitude = FMath::FRandRange(HomingAccelerationMin, HomingAccelerationMax);
+			Projectile->ProjectileMovement->bIsHomingProjectile = true;
+		}
+		
 		Projectile->FinishSpawning(SpawnTransform);
 	}
 }
