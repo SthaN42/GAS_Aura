@@ -11,19 +11,12 @@
 
 FString UAuraProjectileSpell::GetDescription_Implementation(int32 Level)
 {
-	if (Level == 1)
-	{
-		return FString::Printf(TEXT("<Title>PROJECTILE</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches a projectile, dealing damage on impact.</>"), Level);
-	}
-	else
-	{
-		return FString::Printf(TEXT("<Title>PROJECTILE</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches %d projectiles, dealing damage on impact.</>"), Level, FMath::Min(Level, MaxNumberOfProjectiles));
-	}
+	return FString::Printf(TEXT("<Title>PROJECTILE</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches a projectile, dealing damage on impact.</>"), Level);
 }
 
 FString UAuraProjectileSpell::GetNextLevelDescription_Implementation(int32 Level)
 {
-	return FString::Printf(TEXT("<Title>NEXT LEVEL</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches %d projectiles, dealing damage on impact.</>"), Level, FMath::Min(Level, MaxNumberOfProjectiles));
+	return FString::Printf(TEXT("<Title>NEXT LEVEL</>\n<Small>Level </><Level>%d</>\n\n<Default>Launches a projectile, dealing more damage on impact.</>"), Level);
 }
 
 void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
