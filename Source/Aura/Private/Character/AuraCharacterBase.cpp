@@ -75,6 +75,18 @@ UNiagaraSystem* AAuraCharacterBase::GetBloodEffect_Implementation()
 	return BloodEffect;
 }
 
+FTaggedMontage AAuraCharacterBase::GetTaggedMontageByMontageTag_Implementation(const FGameplayTag& MontageTag)
+{
+	for (FTaggedMontage TaggedMontage : AttackMontages)
+	{
+		if (TaggedMontage.MontageTag == MontageTag)
+		{
+			return TaggedMontage;
+		}
+	}
+	return FTaggedMontage();
+}
+
 int32 AAuraCharacterBase::GetMinionCount_Implementation()
 {
 	return MinionCount;

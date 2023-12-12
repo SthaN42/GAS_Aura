@@ -86,6 +86,9 @@ public:
 	UNiagaraSystem* GetBloodEffect();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	FTaggedMontage GetTaggedMontageByMontageTag(const FGameplayTag& MontageTag);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	int32 GetMinionCount();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
@@ -97,4 +100,7 @@ public:
 	virtual FOnASCRegistered GetOnASCRegisteredDelegate() = 0;
 
 	virtual FOnDeath& GetOnDeathDelegate() = 0;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetInShockLoop(bool bInLoop);
 };

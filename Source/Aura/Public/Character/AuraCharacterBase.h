@@ -36,6 +36,7 @@ public:
 	virtual AActor* GetAvatar_Implementation() override;
 	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
 	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
+	virtual FTaggedMontage GetTaggedMontageByMontageTag_Implementation(const FGameplayTag& MontageTag) override;
 	virtual int32 GetMinionCount_Implementation() override;
 	virtual int32 AddToMinionCount_Implementation(const int32 Amount) override;
 	virtual ECharacterClass GetCharacterClass_Implementation() override;

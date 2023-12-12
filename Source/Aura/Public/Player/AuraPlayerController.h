@@ -8,6 +8,7 @@
 #include "AuraPlayerController.generated.h"
 
 
+class UNiagaraSystem;
 class UDamageTextWidgetComponent;
 class USplineComponent;
 class UAuraAbilitySystemComponent;
@@ -80,6 +81,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USplineComponent> Spline;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UNiagaraSystem> ClickNiagaraSystem;
 	
 	void AutoRun();
 
