@@ -27,11 +27,11 @@ struct FTaggedMontage
 	 * AnimMontages needs to send this tag to abilities using the AN_MontageEvent AnimNotify
 	 * This should be unique to each TaggedMontage in an array!
 	 */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "Montage"))
 	FGameplayTag MontageTag;
 
 	/* Tag used to identify which CombatSocket should be used in abilities, ie. the location to spawn a projectile. */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "CombatSocket"))
 	FGameplayTag SocketTag;
 
 	/* The name of the socket the SocketTag refers to. */
