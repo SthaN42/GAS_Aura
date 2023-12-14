@@ -283,8 +283,7 @@ void UAuraAbilitySystemLibrary::SetDeathImpulse(FGameplayEffectContextHandle& Ef
 	}
 }
 
-void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldContextObject,
-                                                           TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, const float Radius,	const FVector& SphereOrigin, const bool bDrawDebugSphere, const FLinearColor DebugSphereColor, const float DrawTime)
+void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, const float Radius,	const FVector& SphereOrigin, const bool bDrawDebugSphere, const FLinearColor DebugSphereColor, const float DrawTime)
 {
 	FCollisionQueryParams SphereParams;
 	SphereParams.AddIgnoredActors(ActorsToIgnore);
@@ -307,8 +306,42 @@ void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldC
 	}
 }
 
+void UAuraAbilitySystemLibrary::GetClosestTargets(int32 MaxTargets, const TArray<AActor*>& Actors, TArray<AActor*>& OutClosestTargets, const FVector& Origin)
+{
+	if (Actors.Num() <= MaxTargets)
+	{
+		OutClosestTargets = Actors;
+		return;
+	}
+
+	TArray<AActor*> ActorsToCheck = Actors;
+	int32 NumTargetsFound = 0;
+
+	while (NumTargetsFound < MaxTargets)
+	{
+		if (ActorsToCheck.Num() == 0) break;
+		
+		double ClosestDistance = TNumericLimits<double>::Max();
+		AActor* ClosestActor;
+		
+		for (AActor* PotentialTarget : ActorsToCheck)
+		{
+			const double Distance = (PotentialTarget->GetActorLocation() - Origin).Length();
+			if (Distance < ClosestDistance)
+			{
+				ClosestDistance = Distance;
+				ClosestActor = PotentialTarget;
+			}
+		}
+		ActorsToCheck.Remove(ClosestActor);
+		OutClosestTargets.AddUnique(ClosestActor);
+		
+		++NumTargetsFound;
+	}
+}
+
 FTaggedMontage UAuraAbilitySystemLibrary::FindTaggedMontageByMontageTag(TArray<FTaggedMontage> TaggedMontages,
-	const FGameplayTag& MontageTag, bool bLogNotFound)
+                                                                        const FGameplayTag& MontageTag, bool bLogNotFound)
 {
 	for (FTaggedMontage TaggedMontage : TaggedMontages)
 	{
