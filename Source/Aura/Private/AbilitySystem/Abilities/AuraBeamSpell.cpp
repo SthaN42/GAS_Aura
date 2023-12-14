@@ -30,9 +30,10 @@ void UAuraBeamSpell::StoreOwnerVariables()
 	}
 }
 
-void UAuraBeamSpell::TraceFirstTarget(const FVector& BeamTargetLocation)
+void UAuraBeamSpell::TraceFirstTarget(const FVector& BeamTargetLocation, const bool bDrawDebugVolumes)
 {
 	checkf(OwnerCharacter, TEXT("OwnerCharacter is not set. Before using this, call StoreOwnerVariables."));
+	
 	if (OwnerCharacter->Implements<UCombatInterface>())
 	{
 		if (USkeletalMeshComponent* Weapon = ICombatInterface::Execute_GetWeapon(OwnerCharacter))
@@ -43,6 +44,9 @@ void UAuraBeamSpell::TraceFirstTarget(const FVector& BeamTargetLocation)
 			ActorsToIgnore.Add(OwnerCharacter);
 			FHitResult HitResult;
 
+			EDrawDebugTrace::Type DrawDebugType;
+			bDrawDebugVolumes ? DrawDebugType = EDrawDebugTrace::ForDuration : DrawDebugType = EDrawDebugTrace::None;
+
 			UKismetSystemLibrary::SphereTraceSingle(
 				OwnerCharacter,
 				SocketLocation,
@@ -51,7 +55,7 @@ void UAuraBeamSpell::TraceFirstTarget(const FVector& BeamTargetLocation)
 				TraceTypeQuery1,
 				false,
 				ActorsToIgnore,
-				EDrawDebugTrace::None,
+				DrawDebugType,
 				HitResult,
 				true);
 

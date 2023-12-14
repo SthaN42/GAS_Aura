@@ -22,7 +22,7 @@ public:
 	void StoreOwnerVariables();
 
 	UFUNCTION(BlueprintCallable, Category = "Beam Spell")
-	void TraceFirstTarget(const FVector& BeamTargetLocation);
+	void TraceFirstTarget(const FVector& BeamTargetLocation, const bool bDrawDebugVolumes = false);
 
 	UFUNCTION(BlueprintCallable, Category = "Beam Spell")
 	void StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTargets);
