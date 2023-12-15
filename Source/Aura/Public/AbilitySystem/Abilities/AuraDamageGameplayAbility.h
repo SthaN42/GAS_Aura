@@ -24,15 +24,15 @@ public:
 
 protected:
 	UFUNCTION(BlueprintPure)
-	float GetDamage(float InLevel = 1.f) const;
+	float GetDamageAtLevel() const;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect> DamageEffectClass;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage", meta = (Categories = "Damage"))
+	UPROPERTY(EditDefaultsOnly, Category = "Damage", meta = (Categories = "Damage"))
 	FGameplayTag DamageType;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	FScalableFloat Damage;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Damage|Forces and impulses")
