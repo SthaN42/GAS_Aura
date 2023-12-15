@@ -41,13 +41,13 @@ public:
 	virtual int32 AddToMinionCount_Implementation(const int32 Amount) override;
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
 	virtual FOnASCRegistered GetOnASCRegisteredDelegate() override;
-	virtual FOnDeath& GetOnDeathDelegate() override;
+	virtual FOnDeathSignature& GetOnDeathDelegate() override;
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() override;
 	// End CombatInterface
 
 	FOnASCRegistered OnAscRegistered;
 
-	FOnDeath OnDeath;
+	FOnDeathSignature OnDeathDelegate;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;

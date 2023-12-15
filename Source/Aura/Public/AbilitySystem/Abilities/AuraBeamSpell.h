@@ -27,6 +27,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Beam Spell")
 	void StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTargets);
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Beam Spell")
+	void PrimaryTargetDied(AActor* DeadActor);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Beam Spell")
+	void AdditionalTargetDied(AActor* DeadActor);
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Beam")
 	int32 MaxNumberOfShockTargets = 5;
