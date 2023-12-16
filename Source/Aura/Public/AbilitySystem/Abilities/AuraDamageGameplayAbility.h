@@ -24,7 +24,7 @@ public:
 
 protected:
 	UFUNCTION(BlueprintPure)
-	float GetDamageAtLevel() const;
+	float GetDamage(const float InLevel = 1.f) const;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect> DamageEffectClass;

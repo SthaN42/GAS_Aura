@@ -22,7 +22,7 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 	Params.DamageGameplayEffectClass = DamageEffectClass;
 	Params.SourceAbilitySystemComponent = GetAbilitySystemComponentFromActorInfo();
 	Params.TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
-	Params.BaseDamage = GetDamageAtLevel();
+	Params.BaseDamage = GetDamage(GetAbilityLevel());
 	Params.AbilityLevel = GetAbilityLevel();
 	Params.DamageType = DamageType;
 	Params.KnockbackChance = KnockbackChance;
@@ -47,7 +47,7 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 	return Params;
 }
 
-float UAuraDamageGameplayAbility::GetDamageAtLevel() const
+float UAuraDamageGameplayAbility::GetDamage(const float InLevel) const
 {
-	return Damage.GetValueAtLevel(GetAbilityLevel());
+	return Damage.GetValueAtLevel(InLevel);
 }
