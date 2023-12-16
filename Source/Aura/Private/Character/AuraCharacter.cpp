@@ -4,6 +4,7 @@
 #include "Character/AuraCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -56,6 +57,29 @@ void AAuraCharacter::OnRep_PlayerState()
 
 	// init ability actor info for the Client
 	InitAbilityActorInfo();
+}
+
+void AAuraCharacter::OnRep_Stunned()
+{
+	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+		
+		FGameplayTagContainer BLockedTags;
+		BLockedTags.AddTag(GameplayTags.Player_Block_CursorTrace);
+		BLockedTags.AddTag(GameplayTags.Player_Block_InputHeld);
+		BLockedTags.AddTag(GameplayTags.Player_Block_InputPressed);
+		BLockedTags.AddTag(GameplayTags.Player_Block_InputReleased);
+
+		if (bIsStunned)
+		{
+			AuraASC->AddLooseGameplayTags(BLockedTags);
+		}
+		else
+		{
+			AuraASC->RemoveLooseGameplayTags(BLockedTags);
+		}
+	}
 }
 
 int32 AAuraCharacter::FindLevelForXP_Implementation(int32 InXP) const
@@ -168,6 +192,8 @@ void AAuraCharacter::InitAbilityActorInfo()
 	AttributeSet = AuraPlayerState->GetAttributeSet();
 
 	OnAscRegistered.Broadcast(AbilitySystemComponent);
+
+	AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_Stun, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AAuraCharacter::StunTagChanged);
 
 	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
 	{

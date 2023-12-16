@@ -226,7 +226,17 @@ void UAuraAttributeSet::HandleDebuff(const FEffectProperties& Props)
 		const TSharedPtr<FGameplayTag> DebuffDamageType = MakeShareable(new FGameplayTag(DamageType));
 		AuraContext->SetDamageType(DebuffDamageType);
 
-		MutableSpec->DynamicGrantedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+		const FGameplayTag DebuffTag = GameplayTags.DamageTypesToDebuffs[DamageType];
+		MutableSpec->DynamicGrantedTags.AddTag(DebuffTag);
+
+		// If the debuff is Stun, block inputs to player
+		if (DebuffTag.MatchesTagExact(GameplayTags.Debuff_Stun))
+		{
+			MutableSpec->DynamicGrantedTags.AddTag(GameplayTags.Player_Block_CursorTrace);
+			MutableSpec->DynamicGrantedTags.AddTag(GameplayTags.Player_Block_InputHeld);
+			MutableSpec->DynamicGrantedTags.AddTag(GameplayTags.Player_Block_InputPressed);
+			MutableSpec->DynamicGrantedTags.AddTag(GameplayTags.Player_Block_InputReleased);
+		}
 
 		Props.TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
 	}

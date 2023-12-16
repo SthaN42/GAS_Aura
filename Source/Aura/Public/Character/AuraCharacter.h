@@ -24,6 +24,8 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 
+	virtual void OnRep_Stunned() override;
+
 	// Begin Player Interface
 	virtual int32 FindLevelForXP_Implementation(int32 InXP) const override;
 	virtual int32 GetXP_Implementation() const override;
