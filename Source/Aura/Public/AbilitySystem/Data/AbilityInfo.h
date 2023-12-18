@@ -32,12 +32,12 @@ struct FAuraAbilityInfo
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<const UTexture2D> Icon = nullptr;
 
-	/* This should use the MF_CircularCooldown Material Function to have to correct cooldown animation. */
+	/* If this ability has a cooldown, this should use the MF_CircularCooldown Material Function to have to correct cooldown animation. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<const UMaterialInterface> CooldownMaterial = nullptr;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	int32 LevelRequirement = 0;
+	int32 LevelRequirement = 1;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UGameplayAbility> Ability;
