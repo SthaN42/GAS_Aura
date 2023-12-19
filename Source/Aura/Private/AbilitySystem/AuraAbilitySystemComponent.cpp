@@ -230,6 +230,11 @@ FGameplayAbilitySpec* UAuraAbilitySystemComponent::GetSpecFromAbilityTag(const F
 	return nullptr;
 }
 
+void UAuraAbilitySystemComponent::MulticastActivatePassiveEffect_Implementation(const FGameplayTag& AbilityTag, bool bActivate)
+{
+	ActivatePassiveEffect.Broadcast(AbilityTag, bActivate);
+}
+
 void UAuraAbilitySystemComponent::UpgradeAttribute(const FGameplayTag& AttributeTag)
 {
 	if (GetAvatarActor()->Implements<UPlayerInterface>())
@@ -285,7 +290,9 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 
 					if (IsPassiveAbility(*SpecWithSlot))
 					{
-						DeactivatePassiveAbility.Broadcast(GetAbilityTagFromSpec(*SpecWithSlot));
+						const FGameplayTag& PrevAbilityTag = GetAbilityTagFromSpec(*SpecWithSlot);
+						MulticastActivatePassiveEffect(PrevAbilityTag, false);
+						DeactivatePassiveAbility.Broadcast(PrevAbilityTag);
 					}
 
 					ClearSlot(SpecWithSlot);
@@ -297,8 +304,10 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 				if (IsPassiveAbility(*AbilitySpec))
 				{
 					TryActivateAbility(AbilitySpec->Handle);
+					MulticastActivatePassiveEffect(AbilityTag, true);
 				}
 			}
+			
 			AssignSlotToAbility(*AbilitySpec, Slot);
 			
 			MarkAbilitySpecDirty(*AbilitySpec);
