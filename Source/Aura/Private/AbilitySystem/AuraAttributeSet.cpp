@@ -7,6 +7,7 @@
 #include "AuraAbilityTypes.h"
 #include "AuraGameplayTags.h"
 #include "GameplayEffectExtension.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/Abilities/AuraDamageGameplayAbility.h"
 #include "GameFramework/Character.h"
@@ -152,6 +153,9 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 {
 	const float LocalIncomingDamage = GetIncomingDamage();
 	SetIncomingDamage(0.f);
+
+	FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
+
 	if (LocalIncomingDamage > 0.f)
 	{
 		const float NewHealth = GetHealth() - LocalIncomingDamage;
@@ -171,7 +175,7 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 			if (Props.TargetCharacter->Implements<UCombatInterface>() && !ICombatInterface::Execute_IsBeingShocked(Props.TargetCharacter))
 			{
 				FGameplayTagContainer TagContainer;
-				TagContainer.AddTag(FAuraGameplayTags::Get().Effects_HitReact);
+				TagContainer.AddTag(GameplayTags.Effects_HitReact);
 				Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
 			}
 
@@ -189,6 +193,38 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 		if (UAuraAbilitySystemLibrary::IsSuccessfulDebuff(Props.EffectContextHandle))
 		{
 			HandleDebuff(Props);
+		}
+
+		// Handles LifeSiphon passive spell
+		if (Props.SourceASC->HasMatchingGameplayTag(GameplayTags.Abilities_Passive_LifeSiphon))
+		{
+			UGameplayEffect* Effect = NewObject<UGameplayEffect>(GetTransientPackage(), FName("DynamicHeal_LifeSiphon"));
+
+			Effect->DurationPolicy = EGameplayEffectDurationType::Instant;
+			Effect->StackingType = EGameplayEffectStackingType::AggregateBySource;
+			Effect->StackLimitCount = 1;
+			
+			// This way of getting the AbilitySpec adds a dependency to AuraAbilitySystemComponent. We could avoid this by creating a utility function in the system library ?
+			if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(Props.SourceASC))
+			{
+				if (const FGameplayAbilitySpec* PassiveAbilitySpec = AuraASC->GetSpecFromAbilityTag(GameplayTags.Abilities_Passive_LifeSiphon))
+				{
+					FGameplayModifierInfo ModifierInfo;
+
+					const float HealAmount = PassiveAbilitySpec->Level * 0.1f * LocalIncomingDamage;
+
+					ModifierInfo.ModifierMagnitude = FScalableFloat(HealAmount);
+					ModifierInfo.ModifierOp = EGameplayModOp::Additive;
+					ModifierInfo.Attribute = GetHealthAttribute();
+
+					Effect->Modifiers.Add(ModifierInfo);
+
+					FGameplayEffectContextHandle EffectContext = Props.SourceASC->MakeEffectContext();
+					EffectContext.AddSourceObject(Props.SourceAvatarActor);
+
+					Props.SourceASC->ApplyGameplayEffectToSelf(Effect, 1.f, EffectContext);
+				}
+			}
 		}
 	}
 }
