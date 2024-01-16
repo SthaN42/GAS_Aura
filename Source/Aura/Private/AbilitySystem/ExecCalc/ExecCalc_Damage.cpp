@@ -162,6 +162,10 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	}
 
 	// TODO: add support for HaloOfProtection
+	if (TargetTags->HasTag(GameplayTags.Abilities_Passive_HaloOfProtection))
+	{
+		Damage *= 0.8f;
+	}
 
 	// Capture BlockChance on Target, and determine if there was a successful Block.
 	float TargetBlockChance = 0.f;
