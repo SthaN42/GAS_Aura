@@ -19,8 +19,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void CauseDamage(AActor* TargetActor);
 
-	UFUNCTION(BlueprintPure)
-	FDamageEffectParams MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor = nullptr) const;
+	/**
+	 * Creates DamageEffectParams using the class defaults
+	 * @param TargetActor The actor that is targeted by this ability
+	 * @param InRadialDamageOrigin If IsRadialDamage is true, the DamageEffectParams needs the origin to compute the radial damage
+	 * @return The created DamageEffectParams
+	 */
+	UFUNCTION(BlueprintPure, meta = (AdvancedDisplay = 1))
+	FDamageEffectParams MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor = nullptr, FVector InRadialDamageOrigin = FVector::ZeroVector) const;
 
 protected:
 	UFUNCTION(BlueprintPure)
@@ -59,12 +65,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Damage|Radial")
 	bool bIsRadialDamage = false;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Damage|Radial")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage|Radial")
 	float RadialDamageInnerRadius = 0.f;
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Damage|Radial")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage|Radial")
 	float RadialDamageOuterRadius = 0.f;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Damage|Radial")
-	FVector RadialDamageOrigin = FVector::ZeroVector;
 };
