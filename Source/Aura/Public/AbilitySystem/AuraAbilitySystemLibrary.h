@@ -27,6 +27,11 @@ class AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+
+	/*
+	 * Widget Controller
+	 */
+	
 	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Widget Controller", meta = (DefaultToSelf = "WorldContextObject"))
 	static bool MakeWidgetControllerParams(const UObject* WorldContextObject, FWidgetControllerParams& OutWCParams, AAuraHUD*& OutAuraHUD);
 
@@ -39,6 +44,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Widget Controller", meta = (DefaultToSelf = "WorldContextObject"))
 	static USpellMenuWidgetController* GetSpellMenuWidgetController(const UObject* WorldContextObject);
 
+	/*
+	 * Ability System Class Defaults
+	 */
+
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Character Class Defaults")
 	static void InitializeDefaultAttributes(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level, UAbilitySystemComponent* ASC);
 
@@ -50,6 +59,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Ability Info")
 	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
+
+	/*
+	 * Effect Context Getters
+	 */
 
 	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
 	static bool IsBlockedHit(const FGameplayEffectContextHandle& EffectContextHandle);
@@ -77,24 +90,40 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
 	static FVector GetDeathImpulse(const FGameplayEffectContextHandle& EffectContextHandle);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static bool IsRadialDamage(const FGameplayEffectContextHandle& EffectContextHandle);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static float GetRadialDamageInnerRadius(const FGameplayEffectContextHandle& EffectContextHandle);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static float GetRadialDamageOuterRadius(const FGameplayEffectContextHandle& EffectContextHandle);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static FVector GetRadialDamageOrigin(const FGameplayEffectContextHandle& EffectContextHandle);
+
+	/*
+	 * Effect Context Setters
+	 */
 	
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
-	static void SetIsBlockedHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bInIsBlockedHit);
+	static void SetIsBlockedHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const bool bInIsBlockedHit);
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
-	static void SetIsCriticalHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bInIsCriticalHit);
+	static void SetIsCriticalHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const bool bInIsCriticalHit);
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
-	static void SetIsSuccessfulDebuff(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bInIsSuccessfulDebuff);
+	static void SetIsSuccessfulDebuff(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const bool bInIsSuccessfulDebuff);
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
-	static void SetDebuffDamage(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, float InDebuffDamage);
+	static void SetDebuffDamage(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const float InDebuffDamage);
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
-	static void SetDebuffDuration(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, float InDebuffDuration);
+	static void SetDebuffDuration(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const float InDebuffDuration);
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
-	static void SetDebuffFrequency(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, float InDebuffFrequency);
+	static void SetDebuffFrequency(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const float InDebuffFrequency);
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
 	static void SetDamageType(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const FGameplayTag& InDamageType);
@@ -104,6 +133,22 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Effects")
 	static void SetDeathImpulse(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const FVector& InImpulse);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static void SetIsRadialDamage(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const bool bInIsRadialDamage);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static void SetRadialDamageInnerRadius(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const float InInnerRadius);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static void SetRadialDamageOuterRadius(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const float InOuterRadius);
+
+	UFUNCTION(BlueprintPure, Category = "Aura Ability System Library|Gameplay Effects")
+	static void SetRadialDamageOrigin(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, const FVector& InOrigin);
+
+	/*
+	 * Gameplay Mechanics
+	 */
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Gameplay Mechanics", meta = (DefaultToSelf = "WorldContextObject", AdvancedDisplay = "DebugSphereColor, DrawTime"))
 	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, const float Radius, const FVector& SphereOrigin, const bool bDrawDebugSphere, const FLinearColor DebugSphereColor = FLinearColor::White, const float DrawTime = 3.f);
