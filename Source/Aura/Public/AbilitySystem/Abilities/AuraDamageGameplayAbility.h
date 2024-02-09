@@ -23,10 +23,23 @@ public:
 	 * Creates DamageEffectParams using the class defaults
 	 * @param TargetActor The actor that is targeted by this ability
 	 * @param InRadialDamageOrigin If IsRadialDamage is true, the DamageEffectParams needs the origin to compute the radial damage
+	 * @param bOverrideKnockbackDirection If True, we'll take the provided knockback direction instead of computing it based on the direction of the owning actor
+	 * @param KnockbackDirectionOverride The direction the target will be pushed towards if there was a knockback
+	 * @param bOverrideDeathImpulseDirection If True, we'll take the provided death impulse direction instead of computing it based on the direction of the owning actor
+	 * @param DeathImpulseDirectionOverride The direction the target will be pushed towards if this damage was fatal
+	 * @param bOverridePitch If True, we'll take the provided pitch angle for the knockback instead of the default 45 degrees
+	 * @param PitchOverride The pitch the target will be pushed toward if there was a knockback
 	 * @return The created DamageEffectParams
 	 */
 	UFUNCTION(BlueprintPure, meta = (AdvancedDisplay = 1))
-	FDamageEffectParams MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor = nullptr, FVector InRadialDamageOrigin = FVector::ZeroVector) const;
+	FDamageEffectParams MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor = nullptr,
+		FVector InRadialDamageOrigin = FVector::ZeroVector,
+		bool bOverrideKnockbackDirection = false,
+		FVector KnockbackDirectionOverride = FVector::ZeroVector,
+		bool bOverrideDeathImpulseDirection = false,
+		FVector DeathImpulseDirectionOverride = FVector::ZeroVector,
+		bool bOverridePitch = false,
+		float PitchOverride = 0.f) const;
 
 protected:
 	UFUNCTION(BlueprintPure)

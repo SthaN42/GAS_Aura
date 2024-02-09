@@ -489,8 +489,10 @@ FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(const 
 	
 	FGameplayEffectContextHandle EffectContextHandle = DamageEffectParams.SourceAbilitySystemComponent->MakeEffectContext();
 	EffectContextHandle.AddSourceObject(SourceAvatarActor);
-	
-	SetKnockbackForce(EffectContextHandle, DamageEffectParams.KnockbackForce);
+
+	const bool bKnockbackChance = DamageEffectParams.KnockbackChance > FMath::RandRange(0, 100);
+	const FVector KnockbackForce = bKnockbackChance ? DamageEffectParams.KnockbackForce : FVector::ZeroVector;
+	SetKnockbackForce(EffectContextHandle, KnockbackForce);
 	SetDeathImpulse(EffectContextHandle, DamageEffectParams.DeathImpulse);
 
 	SetIsRadialDamage(EffectContextHandle, DamageEffectParams.bIsRadialDamage);
