@@ -176,4 +176,20 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Character Class")
 	static int32 GetXPRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, int32 CharacterLevel);
+
+	/*
+	 * Damage Effects Params
+	 */
+
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Damage Effect Params")
+	static void SetTargetASC(UPARAM(ref) FDamageEffectParams& DamageEffectParams, UAbilitySystemComponent* InASC);
+
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Damage Effect Params", meta = (AdvancedDisplay = 2))
+	static void SetRadialDamageEffectParams(UPARAM(ref) FDamageEffectParams& DamageEffectParams, bool bIsRadial, FVector Origin, float InnerRadius, float OuterRadius);
+
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Damage Effect Params", meta = (AdvancedDisplay = 3))
+	static void SetKnockbackParams(UPARAM(ref) FDamageEffectParams& DamageEffectParams, float KnockbackChance, FVector KnockbackDirection, float Magnitude = 0.f);
+
+	UFUNCTION(BlueprintCallable, Category = "Aura Ability System Library|Damage Effect Params", meta = (AdvancedDisplay = 2))
+	static void SetDeathImpulseDirection(UPARAM(ref) FDamageEffectParams& DamageEffectParams, FVector ImpulseDirection, float Magnitude = 0.f);
 };
