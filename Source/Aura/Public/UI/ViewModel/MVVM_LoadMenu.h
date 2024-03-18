@@ -17,6 +17,8 @@ class AURA_API UMVVM_LoadMenu : public UMVVMViewModelBase
 	
 public:
 	void InitializeLoadSlots();
+
+	void LoadData();
 	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UMVVM_LoadSlot> LoadSlotViewModelClass;

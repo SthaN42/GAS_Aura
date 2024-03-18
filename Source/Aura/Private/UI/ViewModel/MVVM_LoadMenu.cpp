@@ -4,6 +4,7 @@
 #include "UI/ViewModel/MVVM_LoadMenu.h"
 
 #include "Game/AuraGameModeBase.h"
+#include "Game/LoadMenuSaveGame.h"
 #include "Kismet/GameplayStatics.h"
 #include "UI/ViewModel/MVVM_LoadSlot.h"
 
@@ -22,6 +23,20 @@ void UMVVM_LoadMenu::InitializeLoadSlots()
 	LoadSlots.Add(2, LoadSlot_2);
 }
 
+void UMVVM_LoadMenu::LoadData()
+{
+	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+	for (const TTuple<int32, UMVVM_LoadSlot*> LoadSlot : LoadSlots)
+	{
+		ULoadMenuSaveGame* SaveObject = AuraGameMode->GetSaveSlotData(LoadSlot.Value->GetLoadSlotName(), LoadSlot.Key);
+
+		LoadSlot.Value->SetSaveName(SaveObject->SaveName);
+		LoadSlot.Value->SlotStatus = SaveObject->SaveSlotStatus;
+
+		LoadSlot.Value->InitializeSlot();
+	}
+}
+
 UMVVM_LoadSlot* UMVVM_LoadMenu::GetLoadSlotViewModelByIndex(const int32 Index) const
 {
 	return LoadSlots.FindChecked(Index);
@@ -33,6 +48,7 @@ void UMVVM_LoadMenu::NewSlotButtonPressed(int32 Slot, const FString& EnteredName
 	AAuraGameModeBase* AuraGameMode = CastChecked<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
 
 	LoadSlots[Slot]->SetSaveName(EnteredName);
+	LoadSlots[Slot]->SlotStatus = Taken;
 
 	AuraGameMode->SaveSlotData(LoadSlots[Slot], Slot);
 
