@@ -29,9 +29,10 @@ UMVVM_LoadSlot* UMVVM_LoadMenu::GetLoadSlotViewModelByIndex(const int32 Index) c
 
 void UMVVM_LoadMenu::NewSlotButtonPressed(int32 Slot, const FString& EnteredName)
 {
-	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+	//TODO: When play-testing from the LoadMenu map, this always fails to get the game mode. We should be able to get it though, should fix this 
+	AAuraGameModeBase* AuraGameMode = CastChecked<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
 
-	LoadSlots[Slot]->SaveName = EnteredName;
+	LoadSlots[Slot]->SetSaveName(EnteredName);
 
 	AuraGameMode->SaveSlotData(LoadSlots[Slot], Slot);
 
