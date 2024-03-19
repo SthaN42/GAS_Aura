@@ -20,7 +20,9 @@ class AURA_API AAuraGameModeBase : public AGameModeBase
 	GENERATED_BODY()
 	
 public:
-	void SaveSlotData(UMVVM_LoadSlot* LoadSlot, int32 SlotIndex);
+	void SaveSlotData(const UMVVM_LoadSlot* LoadSlot, const int32 SlotIndex) const;
+
+	static bool DeleteSlot(const FString& SlotName, const int32 SlotIndex);
 
 	ULoadMenuSaveGame* GetSaveSlotData(const FString& SlotName, int32 SlotIndex) const;
 

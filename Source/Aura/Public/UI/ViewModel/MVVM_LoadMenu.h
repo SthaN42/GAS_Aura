@@ -33,13 +33,16 @@ public:
 	UMVVM_LoadSlot* GetLoadSlotViewModelByIndex(const int32 Index) const;
 
 	UFUNCTION(BlueprintCallable)
-	void NewSlotButtonPressed(int32 Slot, const FString& EnteredName);
+	void NewSlotButtonPressed(const int32 Slot, const FString& EnteredName);
 
 	UFUNCTION(BlueprintCallable)
-	void NewGameButtonPressed(int32 Slot);
+	void NewGameButtonPressed(const int32 Slot);
 
 	UFUNCTION(BlueprintCallable)
-	void SelectSlotButtonPressed(int32 Slot);
+	void SelectSlotButtonPressed(const int32 Slot);
+
+	UFUNCTION(BlueprintCallable)
+	void DeleteButtonPressed();
 
 private:
 
@@ -54,4 +57,7 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UMVVM_LoadSlot> LoadSlot_2;
+
+	UPROPERTY()
+	int32 SelectedSlotIndex;
 };
