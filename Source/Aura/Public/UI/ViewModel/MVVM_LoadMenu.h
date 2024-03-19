@@ -42,6 +42,9 @@ public:
 	void SelectSlotButtonPressed(const int32 Slot);
 
 	UFUNCTION(BlueprintCallable)
+	void PlayButtonPressed();
+
+	UFUNCTION(BlueprintCallable)
 	void DeleteButtonPressed();
 
 private:

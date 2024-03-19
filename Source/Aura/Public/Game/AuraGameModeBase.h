@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "UI/ViewModel/MVVM_LoadSlot.h"
 #include "AuraGameModeBase.generated.h"
 
 class ULoadMenuSaveGame;
@@ -23,6 +24,8 @@ public:
 	void SaveSlotData(const UMVVM_LoadSlot* LoadSlot, const int32 SlotIndex) const;
 
 	static bool DeleteSlot(const FString& SlotName, const int32 SlotIndex);
+
+	void TravelToMap(const UMVVM_LoadSlot* Slot) const;
 
 	ULoadMenuSaveGame* GetSaveSlotData(const FString& SlotName, int32 SlotIndex) const;
 

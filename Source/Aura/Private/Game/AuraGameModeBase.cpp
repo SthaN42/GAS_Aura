@@ -34,6 +34,11 @@ bool AAuraGameModeBase::DeleteSlot(const FString& SlotName, const int32 SlotInde
 	return false;
 }
 
+void AAuraGameModeBase::TravelToMap(const UMVVM_LoadSlot* Slot) const
+{
+	UGameplayStatics::OpenLevelBySoftObjectPtr(Slot, Maps.FindChecked(Slot->GetMapName()));
+}
+
 ULoadMenuSaveGame* AAuraGameModeBase::GetSaveSlotData(const FString& SlotName, const int32 SlotIndex) const
 {
 	USaveGame* SaveGameObject = nullptr;

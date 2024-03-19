@@ -78,6 +78,14 @@ void UMVVM_LoadMenu::SelectSlotButtonPressed(const int32 Slot)
 	SelectedSlotIndex = Slot;
 }
 
+void UMVVM_LoadMenu::PlayButtonPressed()
+{
+	if (!IsValid(LoadSlots[SelectedSlotIndex])) return;
+	
+	const AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+	AuraGameMode->TravelToMap(LoadSlots[SelectedSlotIndex]);
+}
+
 void UMVVM_LoadMenu::DeleteButtonPressed()
 {
 	if (IsValid(LoadSlots[SelectedSlotIndex]))
