@@ -52,6 +52,7 @@ void UMVVM_LoadMenu::NewSlotButtonPressed(const int32 Slot, const FString& Enter
 
 	LoadSlots[Slot]->SetSaveName(EnteredName);
 	LoadSlots[Slot]->SlotStatus = Taken;
+	LoadSlots[Slot]->SetMapName(AuraGameMode->DefaultMapName);
 
 	AuraGameMode->SaveSlotData(LoadSlots[Slot], Slot);
 

@@ -46,3 +46,10 @@ ULoadMenuSaveGame* AAuraGameModeBase::GetSaveSlotData(const FString& SlotName, c
 	}
 	return Cast<ULoadMenuSaveGame>(SaveGameObject);
 }
+
+void AAuraGameModeBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Maps.Add(DefaultMapName, DefaultMap);
+}

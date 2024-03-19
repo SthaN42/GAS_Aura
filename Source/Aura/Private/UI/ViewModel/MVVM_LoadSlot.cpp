@@ -18,3 +18,8 @@ void UMVVM_LoadSlot::SetSaveName(const FString& InSaveName)
 {
 	UE_MVVM_SET_PROPERTY_VALUE(SaveName, InSaveName);
 }
+
+void UMVVM_LoadSlot::SetMapName(const FString& InMapName)
+{
+	UE_MVVM_SET_PROPERTY_VALUE(MapName, InMapName);
+}
