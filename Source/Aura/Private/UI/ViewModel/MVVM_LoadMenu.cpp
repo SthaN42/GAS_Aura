@@ -62,4 +62,9 @@ void UMVVM_LoadMenu::NewGameButtonPressed(int32 Slot)
 
 void UMVVM_LoadMenu::SelectSlotButtonPressed(int32 Slot)
 {
+	// Enable the selected slot button, and disable the others
+	for (const TTuple<int32, UMVVM_LoadSlot*> LoadSlot : LoadSlots)
+	{
+		LoadSlot.Value->EnableSelectSlotButton.Broadcast(LoadSlot.Key != Slot);
+	}
 }
