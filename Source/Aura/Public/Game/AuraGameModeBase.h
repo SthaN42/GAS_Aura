@@ -29,6 +29,8 @@ public:
 
 	ULoadMenuSaveGame* GetSaveSlotData(const FString& SlotName, int32 SlotIndex) const;
 
+	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<USaveGame> LoadMenuSaveGameClass;
 
