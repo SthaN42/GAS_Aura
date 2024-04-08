@@ -30,6 +30,8 @@ void UMVVM_LoadMenu::InitializeLoadSlots()
 void UMVVM_LoadMenu::LoadData()
 {
 	const AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+	if (!IsValid(AuraGameMode)) return;
+	
 	for (const TTuple<int32, UMVVM_LoadSlot*> LoadSlot : LoadSlots)
 	{
 		const ULoadMenuSaveGame* SaveObject = AuraGameMode->GetSaveSlotData(LoadSlot.Value->GetLoadSlotName(), LoadSlot.Key);
@@ -50,8 +52,12 @@ UMVVM_LoadSlot* UMVVM_LoadMenu::GetLoadSlotViewModelByIndex(const int32 Index) c
 
 void UMVVM_LoadMenu::NewSlotButtonPressed(const int32 Slot, const FString& EnteredName)
 {
-	//TODO: When play-testing from the LoadMenu map, this always fails to get the game mode. We should be able to get it though, should fix this 
-	const AAuraGameModeBase* AuraGameMode = CastChecked<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+	const AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+	if (!IsValid(AuraGameMode))
+	{
+		GEngine->AddOnScreenDebugMessage(1, 15.f, FColor::Magenta, FString("Please switch to Single Player"));
+		return;
+	}
 
 	LoadSlots[Slot]->SetSaveName(EnteredName);
 	LoadSlots[Slot]->SlotStatus = Taken;
@@ -94,6 +100,8 @@ void UMVVM_LoadMenu::PlayButtonPressed()
 	UAuraGameInstance* AuraGameInstance = Cast<UAuraGameInstance>(AuraGameMode->GetGameInstance());
 	
 	AuraGameInstance->PlayerStartTag = LoadSlots[SelectedSlotIndex]->PlayerStartTag;
+	AuraGameInstance->LoadSlotName = LoadSlots[SelectedSlotIndex]->GetLoadSlotName();
+	AuraGameInstance->LoadSlotIndex = LoadSlots[SelectedSlotIndex]->SlotIndex;
 	
 	AuraGameMode->TravelToMap(LoadSlots[SelectedSlotIndex]);
 }

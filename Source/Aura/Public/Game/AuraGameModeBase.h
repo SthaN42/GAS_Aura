@@ -29,6 +29,10 @@ public:
 
 	ULoadMenuSaveGame* GetSaveSlotData(const FString& SlotName, int32 SlotIndex) const;
 
+	ULoadMenuSaveGame* RetrieveInGameSaveData();
+
+	void SaveInGameProgressData(ULoadMenuSaveGame* SaveObject);
+
 	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
 
 	UPROPERTY(EditDefaultsOnly)
