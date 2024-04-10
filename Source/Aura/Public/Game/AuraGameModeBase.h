@@ -22,16 +22,15 @@ class AURA_API AAuraGameModeBase : public AGameModeBase
 	
 public:
 	void SaveSlotData(const UMVVM_LoadSlot* LoadSlot, const int32 SlotIndex) const;
-
 	static bool DeleteSlot(const FString& SlotName, const int32 SlotIndex);
+	ULoadMenuSaveGame* GetSaveSlotData(const FString& SlotName, int32 SlotIndex) const;
+	
+	void SaveInGameProgressData(ULoadMenuSaveGame* SaveObject) const;
+	ULoadMenuSaveGame* RetrieveInGameSaveData() const;
+	
+	void SaveWorldState(const UWorld* World) const;
 
 	void TravelToMap(const UMVVM_LoadSlot* Slot) const;
-
-	ULoadMenuSaveGame* GetSaveSlotData(const FString& SlotName, int32 SlotIndex) const;
-
-	ULoadMenuSaveGame* RetrieveInGameSaveData();
-
-	void SaveInGameProgressData(ULoadMenuSaveGame* SaveObject);
 
 	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
 
