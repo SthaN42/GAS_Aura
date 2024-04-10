@@ -22,7 +22,6 @@ struct FSavedAbility
 {
 	GENERATED_BODY()
 	
-public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Class Defaults")
 	TSubclassOf<UGameplayAbility> GameplayAbility;
 
@@ -40,12 +39,45 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	int32 AbilityLevel;
+
+	bool operator==(const FSavedAbility& Other) const
+	{
+		return AbilityTag.MatchesTagExact(Other.AbilityTag);
+	}
 };
 
-inline bool operator==(const FSavedAbility& Left, const FSavedAbility& Right)
+USTRUCT()
+struct FSavedActor
 {
-	return Left.AbilityTag.MatchesTagExact(Right.AbilityTag);
-}
+	GENERATED_BODY()
+
+	UPROPERTY()
+	FName ActorName = FName();
+
+	UPROPERTY()
+	FTransform Transform = FTransform();
+
+	// Serialized variables from the Actor - only those marked with SaveGame specifier
+	UPROPERTY()
+	TArray<uint8> Bytes;
+
+	bool operator==(const FSavedActor& Other) const
+	{
+		return ActorName == Other.ActorName;
+	}
+};
+
+USTRUCT()
+struct FSavedMap
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	FString MapAssetName = FString();
+
+	UPROPERTY()
+	TArray<FSavedActor> SavedActors;
+};
 
 /**
  * 
@@ -56,6 +88,9 @@ class AURA_API ULoadMenuSaveGame : public USaveGame
 	GENERATED_BODY()
 
 public:
+	bool HasMap(const FString& InMapName);
+	FSavedMap GetSavedMapWithMapName(const FString& InMapName);
+	
 	UPROPERTY()
 	FString SlotName = FString();
 
@@ -109,4 +144,9 @@ public:
 
 	UPROPERTY()
 	TArray<FSavedAbility> SavedAbilities;
+
+	/* Maps */
+
+	UPROPERTY()
+	TArray<FSavedMap> SavedMaps;
 };
