@@ -52,7 +52,7 @@ public:
 	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
 
 protected:
-	void LoadProgress();
+	void LoadProgress() const;
 
 private:
 	UPROPERTY(VisibleAnywhere)

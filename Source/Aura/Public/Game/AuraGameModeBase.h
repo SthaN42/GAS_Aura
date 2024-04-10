@@ -29,6 +29,7 @@ public:
 	ULoadMenuSaveGame* RetrieveInGameSaveData() const;
 	
 	void SaveWorldState(const UWorld* World) const;
+	void LoadWorldState(UWorld* World) const;
 
 	void TravelToMap(const UMVVM_LoadSlot* Slot) const;
 
